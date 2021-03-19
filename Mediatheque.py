@@ -190,14 +190,16 @@ class Mediatheque:
         else:
             self._documents.append(d)
 
-    def search(self, title: str) -> bool:
+    def search(self, title: str) -> int:
         """
         Allows you to search for a document
         :param title:
         :return:
         """
+        index = 0
         for i in range(len(self._documents)):
-            if self._documents[i].getTitle() == title: return True
+            if self._documents[i].getTitle() == title: return index
+            index += 1
         return False
 
     # noinspection PyTypeChecker
@@ -207,6 +209,7 @@ class Mediatheque:
         :param c: compositeur
         :return: Bool
         """
+        count = 0
         for i in range(len(self._documents)):
             """
             On vérifie que le document est
@@ -218,7 +221,8 @@ class Mediatheque:
                 est bien celui recherché
                 """
                 cd: CD = self._documents[i]  # Permet ici de récupérer les méthodes de la class CD
-                if cd.getCompositor() == c: return True
+                if cd.getCompositor() == c: return count
+                count += 1
 
     def getDocument(self, index: int) -> Union[Document, str]:
         """

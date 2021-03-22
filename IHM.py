@@ -11,6 +11,14 @@ class Fenetre(Tk):
         self.data = Datagrid(data_csv)
         self.data.pack()
 
+class Medias(ttk.Notebook):
+    def __init__(self,fenetre):
+        self.fenetre = fenetre
+        self.pack()
+        self.add(Creerlivre(self),text="creer livre")
+
+        
+
 def main():
     f = Fenetre()
     f.mainloop()

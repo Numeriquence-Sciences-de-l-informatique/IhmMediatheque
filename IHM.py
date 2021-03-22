@@ -17,7 +17,15 @@ class Medias(ttk.Notebook):
         self.pack()
         self.add(Creerlivre(self),text="creer livre")
 
-        
+class Creerlivre():
+    def __init__(self,parent):
+        self.parent = parent
+        l1 = ttk.Label(text = "titre")
+        l1.pack(padx = 5, pady = 5)
+        l2 = ttk.Label(text = "auteur")
+        l2.pack(padx)
+
+
 
 def main():
     f = Fenetre()

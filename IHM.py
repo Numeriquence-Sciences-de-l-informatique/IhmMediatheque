@@ -25,16 +25,16 @@ class Fenetre(Tk):
         """
         Sélection du document 
         """
-        rad1 = Radiobutton(o1, text='Tout les Documents', value=1)
-        rad2 = Radiobutton(o1, text='Livres', value=2)
-        rad3 = Radiobutton(o1, text='CD', value=3)
-
-        rad1.grid(column=0, row=0)
-        rad2.grid(column=1, row=0)
-        rad3.grid(column=2, row=0)
-
-        lbl = Label(o2, text="Hello", font=("Arial Bold", 50))
-        lbl.pack()
+        # rad1 = Radiobutton(o1, text='Tout les Documents', value=1)
+        # rad2 = Radiobutton(o1, text='Livres', value=2)
+        # rad3 = Radiobutton(o1, text='CD', value=3)
+        #
+        # rad1.grid(column=0, row=0)
+        # rad2.grid(column=1, row=0)
+        # rad3.grid(column=2, row=0)
+        #
+        # lbl = Label(o2, text="Hello", font=("Arial Bold", 50))
+        # lbl.pack()
 
 
 class Medias(ttk.Notebook):

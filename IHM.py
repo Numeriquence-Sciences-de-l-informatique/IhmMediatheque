@@ -1,10 +1,8 @@
-from tkinter import Tk, ttk, Menu
+
+from tkinter.ttk import Notebook, Progressbar
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-from tkinter.ttk import Notebook, Progressbar
-
-from datagrid import Datagrid
 
 class Fenetre(Tk):
     def __init__(self):
@@ -62,6 +60,24 @@ class Creerlivre(ttk.Frame):
         l2.pack(padx = 5, pady = 5)
         b1 = ttk.Button()
         b1.pack()
+        self.onglets.pack(fill=tk.X)
+        o1 = ttk.Frame(self.onglets)  # Ajout de l'onglet 1
+        o1.pack( side=LEFT)
+        o2 = ttk.Frame(self.onglets)  # Ajout de l'onglet 2
+        o2.pack( side=LEFT)
+        self.onglets.add(o1, text='Onglet 1')  # Nom de l'onglet 1
+        self.onglets.add(o2, text='Onglet 2')  # Nom de l'onglet 2
+        
+
+
+
+        # data_csv = "colonne1:50;colonne2:100;colonne3:50\n11;12;13\n21;22;23"
+        # self.data = Datagrid(self, data_csv)
+        # self.data.pack()
+
+class Medias(Frame):
+    def __init__(self):
+        super().__init__()
 
 
 def main():

@@ -2,7 +2,7 @@ from tkinter import Tk, ttk, Menu
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-from tkinter.ttk import Notebook
+from tkinter.ttk import Notebook, Progressbar
 
 from datagrid import Datagrid
 
@@ -36,6 +36,14 @@ class Fenetre(Tk):
         lbl = Label(o2, text="Hello", font=("Arial Bold", 50))
         lbl.pack()
 
+        style = ttk.Style()
+
+        style.theme_use('classic')
+
+        style.configure("black.Horizontal.TProgressbar", background='black')
+
+        bar = Progressbar(o2, length=200, style='black.Horizontal.TProgressbar')
+
 
 class Medias(ttk.Notebook):
     def __init__(self,fenetre):
@@ -46,6 +54,7 @@ class Medias(ttk.Notebook):
 
 class Creerlivre(ttk.Frame):
     def __init__(self,parent):
+        super().__init__(parent)
         self.parent = parent
         l1 = ttk.Label(text="titre")
         l1.pack(padx = 5, pady = 5)

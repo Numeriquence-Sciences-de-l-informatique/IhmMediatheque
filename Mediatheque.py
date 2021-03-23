@@ -174,6 +174,12 @@ class Mediatheque:
         s += "\------------------------------------------------------------------------------------------------------/"
         return s
 
+    def to_csv(self) -> str:
+        pass
+
+    def initialisation(self):
+        pass
+
     def add(self, d: 'Document'):
         """
         Add a document with the condition that if the document

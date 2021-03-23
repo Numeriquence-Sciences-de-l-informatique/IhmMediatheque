@@ -15,7 +15,7 @@ class Fenetre(Tk):
         self.geometry('640x480')
         self.onglets = ttk.Notebook(self)  # Création du système d'onglets
         self.onglets.pack(fill=tk.BOTH, expand=1)
-        o1 = ttk.Frame(self.onglets)  # Ajout de l'onglet 1
+        o1 = Medias(self.onglets)  # Ajout de l'onglet 1
         o1.pack(side=LEFT)
         o2 = ttk.Frame(self.onglets)  # Ajout de l'onglet 2
         o2.pack(side=LEFT)
@@ -25,36 +25,50 @@ class Fenetre(Tk):
         """
         Sélection du document 
         """
-        rad1 = Radiobutton(o1, text='Tout les Documents', value=1)
-        rad2 = Radiobutton(o1, text='Livres', value=2)
-        rad3 = Radiobutton(o1, text='CD', value=3)
 
-        rad1.grid(column=0, row=0)
-        rad2.grid(column=1, row=0)
-        rad3.grid(column=2, row=0)
-
+        # rad1 = Radiobutton(o1, text='Tout les Documents', value=1)
+        # rad2 = Radiobutton(o1, text='Livres', value=2)
+        # rad3 = Radiobutton(o1, text='CD', value=3)
+        #
+        # rad1.grid(column=0, row=0)
+        # rad2.grid(column=1, row=0)
+        # rad3.grid(column=2, row=0)
         lbl = Label(o2, text="Hello", font=("Arial Bold", 50))
         lbl.pack()
 
 
 class Medias(ttk.Notebook):
-    def __init__(self,fenetre):
-        self.fenetre = fenetre
+    def __init__(self,parent):
+        super().__init__(parent)
+        self.fenetre = parent
         self.pack()
         self.add(Creerlivre(self),text="creer livre")
+        self.add(CreerCD(self), text="creer CD")
 
 
 class Creerlivre(ttk.Frame):
     def __init__(self,parent):
+        super().__init__(parent)
         self.parent = parent
-        l1 = ttk.Label(text="titre")
+        l1 = ttk.Label(self,text="titre")
         l1.pack(padx = 5, pady = 5)
-        l2 = ttk.Label(text="Auteur")
+        l2 = ttk.Label(self,text="Auteur")
         l2.pack(padx = 5, pady = 5)
-        b1 = ttk.Button()
+        b1 = ttk.Button(self,text="Créer")
         b1.pack()
 
-
+class CreerCD(ttk.Frame):
+    def __init__(self,parent):
+        super().__init__(parent)
+        self.parent = parent
+        l1 = ttk.Label(self,text="titre")
+        l1.pack(padx = 5, pady = 5)
+        l2 = ttk.Label(self,text="Compositeur")
+        l2.pack(padx = 5, pady = 5)
+        l3 = ttk.Label(self,text="interprète")
+        l3.pack(padx = 5, pady = 5)
+        b1 = ttk.Button(self,text="Créer")
+        b1.pack()
 def main():
     f = Fenetre()
 

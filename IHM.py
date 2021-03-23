@@ -19,11 +19,22 @@ class Fenetre(Tk):
         o1.pack(side=LEFT)
         o2 = ttk.Frame(self.onglets)  # Ajout de l'onglet 2
         o2.pack(side=LEFT)
-        self.onglets.add(o1, text='Onglet 1')  # Nom de l'onglet 1
-        self.onglets.add(o2, text='Onglet 2')  # Nom de l'onglet 2
-        data_csv = "colonne1:50;colone2:100;colonne3:50\n11;12;13\n21;22;23"
-        data = Datagrid(o1, data_csv)
-        data.pack()
+        self.onglets.add(o1, text='Médiathèque')  # Nom de l'onglet 1
+        self.onglets.add(o2, text='Adhérents')  # Nom de l'onglet 2
+
+        """
+        Sélection du document 
+        """
+        rad1 = Radiobutton(o1, text='Tout les Documents', value=1)
+        rad2 = Radiobutton(o1, text='Livres', value=2)
+        rad3 = Radiobutton(o1, text='CD', value=3)
+
+        rad1.grid(column=0, row=0)
+        rad2.grid(column=1, row=0)
+        rad3.grid(column=2, row=0)
+
+        lbl = Label(o2, text="Hello", font=("Arial Bold", 50))
+        lbl.pack()
 
 
 class Medias(ttk.Notebook):
@@ -41,20 +52,7 @@ class Creerlivre(ttk.Frame):
         l2 = ttk.Label(text="Auteur")
         l2.pack(padx = 5, pady = 5)
         b1 = ttk.Button()
-
-
-        
-
-
-
-        # data_csv = "colonne1:50;colonne2:100;colonne3:50\n11;12;13\n21;22;23"
-        # self.data = Datagrid(self, data_csv)
-        # self.data.pack()
-
-class Medias(Frame):
-    def __init__(self):
-        super().__init__()
-
+        b1.pack()
 
 
 def main():

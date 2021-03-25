@@ -6,11 +6,12 @@ from tkinter.ttk import Notebook
 
 from datagrid import Datagrid
 
+
 class Fenetre(Tk):
     def __init__(self):
         super().__init__()
-        self.texte:str = "Hi"
-        self.nombre:int = 10
+        self.texte: str = "Hi"
+        self.nombre: int = 10
         self.title("Médiathèque")
         self.geometry('640x480')
         self.onglets = ttk.Notebook(self)  # Création du système d'onglets
@@ -38,37 +39,40 @@ class Fenetre(Tk):
 
 
 class Medias(ttk.Notebook):
-    def __init__(self,fenetre):
+    def __init__(self, fenetre):
         super().__init__(fenetre)
         self.fenetre = fenetre
         self.pack()
-        self.add(Creerlivre(self),text="creer livre")
+        self.add(Creerlivre(self), text="creer livre")
         self.add(CreerCD(self), text="creer CD")
 
 
 class Creerlivre(ttk.Frame):
-    def __init__(self,parent):
+    def __init__(self, parent):
         super().__init__()
         self.parent = parent
-        ttk.Label(self,text="titre").pack(padx = 5, pady = 5)
-        ttk.Label(self,text="Auteur").pack(padx = 5, pady = 5)
-        b1 = ttk.Button(self,text="Créer")
+        ttk.Label(self, text="titre").pack(padx=5, pady=5)
+        ttk.Label(self, text="Auteur").pack(padx=5, pady=5)
+        b1 = ttk.Button(self, text="Créer")
         b1.pack()
 
+
 class CreerCD(ttk.Frame):
-    def __init__(self,parent):
+    def __init__(self, parent):
         super().__init__()
         self.parent = parent
-        ttk.Label(self,text="titre").pack(padx = 5, pady = 5)
-        ttk.Label(self,text="compositeur").pack(padx = 5, pady = 5)
-        ttk.Label(self,text="compositeur").pack(padx = 5, pady = 5)
-        b1 = ttk.Button(self,text="Créer")
+        ttk.Label(self, text="titre").pack(padx=5, pady=5)
+        ttk.Label(self, text="compositeur").pack(padx=5, pady=5)
+        ttk.Label(self, text="compositeur").pack(padx=5, pady=5)
+        b1 = ttk.Button(self, text="Créer")
         b1.pack()
+
 
 def main():
     f = Fenetre()
 
     f.mainloop()
+
 
 if __name__ == '__main__':
     main()

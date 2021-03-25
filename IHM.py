@@ -50,10 +50,8 @@ class Creerlivre(ttk.Frame):
     def __init__(self,parent):
         super().__init__()
         self.parent = parent
-        l1 = ttk.Label(self,text="titre")
-        l1.pack(padx = 5, pady = 5)
-        l2 = ttk.Label(self,text="Auteur")
-        l2.pack(padx = 5, pady = 5)
+        ttk.Label(self,text="titre").pack(padx = 5, pady = 5)
+        ttk.Label(self,text="Auteur").pack(padx = 5, pady = 5)
         b1 = ttk.Button(self,text="Créer")
         b1.pack()
 
@@ -61,12 +59,9 @@ class CreerCD(ttk.Frame):
     def __init__(self,parent):
         super().__init__()
         self.parent = parent
-        l1 = ttk.Label(self,text="titre")
-        l1.pack(padx = 5, pady = 5)
-        l2 = ttk.Label(self,text="compositeur")
-        l2.pack(padx = 5, pady = 5)
-        l3 = ttk.Label(self,text="compositeur")
-        l3.pack(padx = 5, pady = 5)
+        ttk.Label(self,text="titre").pack(padx = 5, pady = 5)
+        ttk.Label(self,text="compositeur").pack(padx = 5, pady = 5)
+        ttk.Label(self,text="compositeur").pack(padx = 5, pady = 5)
         b1 = ttk.Button(self,text="Créer")
         b1.pack()
 

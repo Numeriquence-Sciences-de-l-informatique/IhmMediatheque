@@ -62,10 +62,15 @@ class CreerCD(ttk.Frame):
         super().__init__()
         self.parent = parent
         ttk.Label(self, text="titre").pack(padx=5, pady=5)
+        saisiTitle = Entry(self, width=10).pack()
         ttk.Label(self, text="compositeur").pack(padx=5, pady=5)
+        saisiTitle = Entry(self, width=10).pack()
         ttk.Label(self, text="compositeur").pack(padx=5, pady=5)
+        saisiTitle = Entry(self, width=10).pack()
         b1 = ttk.Button(self, text="Créer")
         b1.pack()
+
+
 
 
 def main():

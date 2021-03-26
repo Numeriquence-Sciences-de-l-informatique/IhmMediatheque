@@ -352,6 +352,60 @@ class Adherent:
         except:
             return f"[!] Error : Index hors plage"
 
+class Adhesions:
+    def __init__(self):
+        self._list_adherent : List[Adherent] = []
+        self._adherent_courant : int = -1
+
+    def add (self, adherent : Adherent )->bool :
+        for i in range(len(self._list_adherent)) :
+            if adherent == self._list_adherent[i] :
+                return False
+        self._list_adherent.append(adherent)
+        return True
+
+
+    def suprime (self, adherent : Adherent):
+        if adherent in  self._list_adherent :
+            self._list_adherent.remove(adherent)
+
+    def set_adherant_courant(self, index : int):
+        if -1 < index < len(self._list_adherent) :
+            self._adherent_courant = index
+
+    def set_adherant_courant_by_name(self, name : str):
+        index = self._get_index_by_name(name)
+        if index != -1 :
+            self.set_adherant_courant(index)
+
+    def _get(self, index : int)->Adherent:
+        return self._list_adherent[index]
+
+    def _get_courant(self)-> Union[Adherent,None]:
+        pass
+
+    def _get_index_by_name(self, name : str )->int :
+            for i in range(len(self._list_adherent)):
+                if name == self._list_adherent[i].get_name():
+                    return i
+            return -1
+
+    def get_by_name(self, name : str )-> Adherent:
+        index = self._get_index_by_name(name)
+        if index != -1:
+            return self._get(index)
+
+    def get_name_courant(self, name)-> str:
+        index = self._get_index_by_name(name)
+        if index != -1:
+            self._list_adherent[index].get_name()
+
+    def to_cvs (self)-> str :
+        s="index:<50;nom:^80\n"
+        for i in range(len(self._list_adherent)):
+            s += f"{i};{self._list_adherent[i].get_name()}\n"
+        return s
+
 def main():
     m = Mediatheque()
     m.add(Livre("Essais", "Montaigne"))

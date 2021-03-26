@@ -5,14 +5,13 @@ import tkinter as tk
 from tkinter.ttk import Notebook
 from Mediatheque import *
 
-
 from datagrid import Datagrid
 
 
 class Fenetre(Tk):
     def __init__(self):
         super().__init__()
-        self.mediatheque= Mediatheque()
+        self.mediatheque = Mediatheque()
         self.adherents = Adhesions()
         self.texte: str = "Hi"
         self.nombre: int = 10
@@ -53,11 +52,11 @@ class Medias(ttk.Notebook):
 
 class Creerlivre(ttk.Frame):
     def __init__(self, parent):
-        super().__init__()
+        super().__init__(parent)
         self.parent = parent
         c1 = ttk.Frame(self, borderwidth=5)
         c1.pack()
-        ttk.Label(c1, text="titre").pack(padx=5, pady=5,side="left")
+        ttk.Label(c1, text="titre").pack(padx=5, pady=5, side="left")
         self.titre = ttk.Entry(c1)
         self.titre.pack(padx=5, pady=5)
 
@@ -66,8 +65,12 @@ class Creerlivre(ttk.Frame):
         ttk.Label(c2, text="Auteur").pack(padx=5, pady=5, side="left")
         self.auteur = ttk.Entry(c2)
         self.auteur.pack(padx=5, pady=5)
-        self.b1 = ttk.Button(self, text="Créer", command=lambda:self.master.master.master.mediatheque.add(Livre(self.titre.get(),self.auteur.get())))
+        self.b1 = ttk.Button(self, text="Créer", command=self.creer)
         self.b1.pack()
+
+    def creer(self):
+        self.master.master.master.mediatheque.add(Livre(self.titre.get(), self.auteur.get()))
+        print(self.master.master.master.mediatheque)
 
 
 class CreerCD(ttk.Frame):
@@ -81,8 +84,6 @@ class CreerCD(ttk.Frame):
         saisiTitle = Entry(self, width=10).pack()
         b1 = ttk.Button(self, text="Créer")
         b1.pack()
-
-
 
 
 def main():

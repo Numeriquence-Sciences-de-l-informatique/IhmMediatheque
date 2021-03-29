@@ -34,7 +34,6 @@ class Fenetre(Tk):
         # rad1.grid(column=0, row=0)
         # rad2.grid(column=1, row=0)
         # rad3.grid(column=2, row=0)
-        #
         lbl = Label(o2, text="Hello", font=("Arial Bold", 50))
         lbl.pack()
 

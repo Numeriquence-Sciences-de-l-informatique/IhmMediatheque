@@ -54,21 +54,16 @@ class Creerlivre(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        c1 = ttk.Frame(self, borderwidth=5)
-        c1.pack()
-        ttk.Label(c1, text="titre").pack(padx=5, pady=5, side="left")
-        self.titre = ttk.Entry(c1)
-        self.titre.pack(padx=5, pady=5)
+        ttk.Label(self, text="Titre").grid(row=0, column=0,padx=12,pady=5)
+        self.titre = ttk.Entry(self)
+        self.titre.grid(row=0, column=1)
+        ttk.Label(self, text="Auteur").grid(row=1,column=0,padx=5, pady=5)
+        self.auteur = ttk.Entry(self)
+        self.auteur.grid(row=1,column=1)
+        self.b1 = ttk.Button(self, text="Créer", command=self.creerLivre)
+        self.b1.grid(row=2,column=1,padx=5,pady=5)
 
-        c2 = ttk.Frame(self, borderwidth=5)
-        c2.pack()
-        ttk.Label(c2, text="Auteur").pack(padx=5, pady=5, side="left")
-        self.auteur = ttk.Entry(c2)
-        self.auteur.pack(padx=5, pady=5)
-        self.b1 = ttk.Button(self, text="Créer", command=self.creer)
-        self.b1.pack()
-
-    def creer(self):
+    def creerLivre(self):
         self.master.master.master.mediatheque.add(Livre(self.titre.get(), self.auteur.get()))
         print(self.master.master.master.mediatheque)
 

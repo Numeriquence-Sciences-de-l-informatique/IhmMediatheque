@@ -1,8 +1,6 @@
-from tkinter import Tk, ttk, Menu
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-from tkinter.ttk import Notebook
 from Mediatheque import *
 
 from datagrid import Datagrid
@@ -36,7 +34,6 @@ class Fenetre(Tk):
         # rad1.grid(column=0, row=0)
         # rad2.grid(column=1, row=0)
         # rad3.grid(column=2, row=0)
-        #
         lbl = Label(o2, text="Hello", font=("Arial Bold", 50))
         lbl.pack()
 
@@ -74,9 +71,9 @@ class CreerCD(ttk.Frame):
         self.parent = parent
         f1 = ttk.Frame(self, borderwidth=5)
         f1.pack()
-        ttk.Label(f1, text="Titre").pack(padx=5, pady=5, side="left")
+        ttk.Label(f1, text="Titre").pack(padx=31, pady=5, side="left")
         self.title = ttk.Entry(f1)
-        self.title.pack(padx=5, pady=5)
+        self.title.pack(padx=5, pady=5, side="right")
 
         f2 = ttk.Frame(self, borderwidth=5)
         f2.pack()
@@ -86,16 +83,17 @@ class CreerCD(ttk.Frame):
 
         f3 = ttk.Frame(self, borderwidth=5)
         f3.pack()
-        ttk.Label(f3, text="Compositeur").pack(padx=5, pady=5, side="left")
-        self.compositeur = ttk.Entry(f3)
-        self.compositeur.pack(padx=5, pady=5)
+        ttk.Label(f3, text="Interprete").pack(padx=13, pady=5, side="left")
+        self.interprete = ttk.Entry(f3)
+        self.interprete.pack(padx=5, pady=5)
 
-        self.b1 = ttk.Button(self, text="Créer", command=self.createCD())
+        self.b1 = ttk.Button(self, text="Créer", command=self.createCD)
         self.b1.pack()
 
 
     def createCD(self):
-        pass
+        self.master.master.master.mediatheque.add(CD(self.title.get(), self.compositeur.get(), self.interprete.get()))
+        print(self.master.master.master.mediatheque)
 
 
 def main():

@@ -92,7 +92,7 @@ class CreerCD(ttk.Frame):
         self.interprete = ttk.Entry(f3)
         self.interprete.pack(padx=5, pady=5)
 
-        self.b1 = ttk.Button(self, text="Créer", command=self.createCD())
+        self.b1 = ttk.Button(self, text="Créer", command=self.createCD)
         self.b1.pack()
 
 

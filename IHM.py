@@ -91,16 +91,17 @@ class CreerCD(ttk.Frame):
 
         f3 = ttk.Frame(self, borderwidth=5)
         f3.pack()
-        ttk.Label(f3, text="Compositeur").pack(padx=5, pady=5, side="left")
-        self.compositeur = ttk.Entry(f3)
-        self.compositeur.pack(padx=5, pady=5)
+        ttk.Label(f3, text="Interprete").pack(padx=5, pady=5, side="left")
+        self.interprete = ttk.Entry(f3)
+        self.interprete.pack(padx=5, pady=5)
 
         self.b1 = ttk.Button(self, text="Créer", command=self.createCD())
         self.b1.pack()
 
 
     def createCD(self):
-        pass
+        self.master.master.master.mediatheque.add(CD(self.title.get(), self.compositeur.get(), self.interprete.get()))
+        print(self.master.master.master.mediatheque)
 
 
 def main():

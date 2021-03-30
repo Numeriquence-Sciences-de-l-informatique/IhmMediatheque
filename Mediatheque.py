@@ -91,8 +91,11 @@ class CD(Document):
     def __str__(self):
         return f"{'CD':^10}|{self.getTitle():^26}|{self._compositor:^20}|{self._interpret: ^20}|{self.getEmprunt():^13}|\n"
 
-    def to_csv(self):
-        pass
+    def to_csv(self) -> str:
+        s = "index:<50;nom:^80\n"
+        for i in range(len(self._compositor)):
+            s += f"CD;{self.getTitle()};{self._compositor};{self._interpret};{self.getEmprunt()};\n"
+        return s
 
     def getCompositor(self):
         """
@@ -142,9 +145,6 @@ class Livre(Document):
         """
         return f"{'Livre':^10}|{self.getTitle():^26}|{self.getAuthor():^20}|{'':<20}|{self.getEmprunt():^13}|\n"
 
-    def to_csv(self):
-        pass
-
     def getAuthor(self):
         return self._author
 
@@ -160,6 +160,12 @@ class Livre(Document):
     def emprunter(self) -> 'Empruntlivre':
         self.setEmprunt()
         return Empruntlivre(self)
+
+    def to_csv(self) -> str:
+        s = "index:<50;nom:^80\n"
+        for i in range(len(self._author)):
+            s += f"Livre;{self.getTitle()};{self.getAuthor()};;{self.getEmprunt()}\n"
+        return s
 
 
 class Mediatheque:
@@ -418,7 +424,7 @@ class Adhesions:
         if index != -1:
             self._list_adherent[index].get_name()
 
-    def to_cvs(self) -> str:
+    def to_csv(self) -> str:
         s = "index:<50;nom:^80\n"
         for i in range(len(self._list_adherent)):
             s += f"{i};{self._list_adherent[i].get_name()}\n"

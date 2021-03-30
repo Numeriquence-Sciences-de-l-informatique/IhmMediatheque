@@ -1,5 +1,4 @@
 
-
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
@@ -58,22 +57,22 @@ class Creerlivre(ttk.Frame):
         self.parent = parent
 
         # first Label
-        ttk.Label(self, text="Titre").grid(row=0, column=0,padx=12,pady=5)
+        ttk.Label(self, text="Titre").grid(row=0, column=0 ,padx=12 ,pady=5)
 
-        #first Entry: titre
+        # first Entry: titre
         self.titre = ttk.Entry(self)
         self.titre.grid(row=0, column=1)
 
         # second Label
-        ttk.Label(self, text="Auteur").grid(row=1,column=0,padx=5, pady=5)
+        ttk.Label(self, text="Auteur").grid(row=1 ,column=0 ,padx=5, pady=5)
 
         # second Entry: auteur
         self.auteur = ttk.Entry(self)
-        self.auteur.grid(row=1,column=1)
+        self.auteur.grid(row=1 ,column=1)
 
         # first Button: Create a book
         self.b1 = ttk.Button(self, text="Créer", command=self.creerLivre)
-        self.b1.grid(row=2,column=1,padx=5,pady=5)
+        self.b1.grid(row=2 ,column=1 ,padx=5 ,pady=5)
 
 
     def creerLivre(self):
@@ -129,9 +128,9 @@ class SearchCD(ttk.Frame):
         self.search = ttk.Button(self, text="Rechercher", command=self.searchLivre)
         self.search.grid(row=1, column=1, padx=12, pady=7)
 
-    def searchLivre(self, title: str):
-        self.master.master.master.mediatheque.search(title)
-        print(self.master.master.master.mediatheque)
+    def searchLivre(self):
+        index: int = self.master.master.master.mediatheque.search(self.title.get())
+        print(index)
 
 
 

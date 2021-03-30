@@ -112,7 +112,13 @@ class CreerCD(ttk.Frame):
 class ListeDocs(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-        "Reflexion en cours ...."
+        med_csv = self.master.master.master.mediatheque.to_csv()
+        print(med_csv)
+        self.data = Datagrid(self,med_csv)
+        self.data.pack()
+
+        " /!\ méthode non terminée "
+
 
 
 

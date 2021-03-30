@@ -187,7 +187,7 @@ class Mediatheque:
         return s
 
     def to_csv(self) -> str:
-        s = ""
+        s = f'index:^50;document:^100;titre:^60;auteur/compositeur:^50;interprete:^50;disponible:^40;\n'
         for i in range(len(self._documents)):
             s += f'{"document"};{"titre"};{"auteur/compositeur"};{"interprete"};{"disponible"};\n'
         return s

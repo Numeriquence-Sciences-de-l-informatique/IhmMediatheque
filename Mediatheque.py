@@ -184,7 +184,17 @@ class Mediatheque:
         pass
 
     def initialisation(self):
-        pass
+        self.add(Livre("Essais", "Montaigne"))
+        self.add(Livre("Le bois", "Jacques Dutronc"))
+        self.add(Livre("Le silence", "Thomas Meyer"))
+        self.add(Livre("Parler", "Nathaël Bonnal"))
+        self.add(Livre("Les boucles", "Kevin Terrison"))
+        self.add(Livre("Douceur du code", "Thélio Doucet"))
+        self.add(CD("j'aime le code", "Nathaël Bonnal", "Thomas meyer"))
+        self.add(CD("Quand j'étais petit codeur", "Thélio Doucet", "Thélio Doucet"))
+        self.add(CD("Le rap du codeur", "Kevin Terrison", "Thomas Meyer"))
+        self.add(CD("Silence on code", "Thomas Meyer", "Nathaël Bonnal"))
+        self.add(CD("print print print", "Nathaël Bonnal", "Thélio Doucet"))
 
     def add(self, d: 'Document'):
         """
@@ -414,6 +424,12 @@ class Adhesions:
             s += f"{i};{self._list_adherent[i].get_name()}\n"
         return s
 
+    def initialisation(self):
+        self.add(Adherent("Pierre"))
+        self.add(Adherent("Telio"))
+        self.add(Adherent("Kevin"))
+        self.add(Adherent("Nathanael"))
+        self.add(Adherent("Thomas"))
 
 def main():
     m = Mediatheque()

@@ -373,7 +373,7 @@ class Adhesions:
         self._list_adherent.append(adherent)
         return True
 
-    def suprime(self, adherent: Adherent):
+    def supprime(self, adherent: Adherent):
         if adherent in self._list_adherent:
             self._list_adherent.remove(adherent)
 

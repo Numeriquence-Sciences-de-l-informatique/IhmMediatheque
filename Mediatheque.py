@@ -92,7 +92,7 @@ class CD(Document):
         return f"{'CD':^10}|{self.getTitle():^26}|{self._compositor:^20}|{self._interpret: ^20}|{self.getEmprunt():^13}|\n"
 
     def to_csv(self) -> str:
-        s = "index:<50;nom:^80\n"
+        s = ""
         for i in range(len(self._compositor)):
             s += f"CD;{self.getTitle()};{self._compositor};{self._interpret};{self.getEmprunt()};\n"
         return s
@@ -162,7 +162,7 @@ class Livre(Document):
         return Empruntlivre(self)
 
     def to_csv(self) -> str:
-        s = "index:<50;nom:^80\n"
+        s = ""
         for i in range(len(self._author)):
             s += f"Livre;{self.getTitle()};{self.getAuthor()};;{self.getEmprunt()}\n"
         return s
@@ -187,7 +187,10 @@ class Mediatheque:
         return s
 
     def to_csv(self) -> str:
-        pass
+        s = ""
+        for i in range(len(self._documents)):
+            s += f'{"document"};{"titre"};{"auteur/compositeur"};{"interprete"};{"disponible"};\n'
+        return s
 
     def initialisation(self):
         self.add(Livre("Essais", "Montaigne"))
@@ -299,6 +302,13 @@ class Emprunt(ABC):
         :return:
         """
         return self._doc.getEmprunt()
+
+    def to_csv(self) -> str:
+        s = ""
+        for i in range(len(self._list_adherent)):
+            s += f"{self._doc.__str__()[:80]};{str(self._dateEmprunt)};{str(timedelta(days= self._nbDayMake) + self._dateEmprunt)};\n"
+        return s
+
 
 
 class Empruntlivre(Emprunt):

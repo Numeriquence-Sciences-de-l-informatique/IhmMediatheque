@@ -43,7 +43,6 @@ class Document(ABC):
         """
         self._title = title
 
-
     def isEmprunt(self):
         return self._emprunt
 
@@ -90,8 +89,10 @@ class CD(Document):
         self._compositor = compositor
 
     def __str__(self):
-
         return f"{'CD':^10}|{self.getTitle():^26}|{self._compositor:^20}|{self._interpret: ^20}|{self.getEmprunt():^13}|\n"
+
+    def to_csv(self):
+        pass
 
     def getCompositor(self):
         """
@@ -141,6 +142,9 @@ class Livre(Document):
         """
         return f"{'Livre':^10}|{self.getTitle():^26}|{self.getAuthor():^20}|{'':<20}|{self.getEmprunt():^13}|\n"
 
+    def to_csv(self):
+        pass
+
     def getAuthor(self):
         return self._author
 
@@ -173,7 +177,7 @@ class Mediatheque:
         s += '|------------------------------------------------------------------------------------------------------|\n'
         for i, d in enumerate(self._documents):
             s += f"|{i:<8}|" + str(d)
-        s +="\------------------------------------------------------------------------------------------------------/"
+        s += "\------------------------------------------------------------------------------------------------------/"
         return s
 
     def to_csv(self) -> str:
@@ -305,6 +309,11 @@ class Adherent:
         s += "\----------------------------------------------------------------------------------------------------------------------/"
         return s
 
+
+    def to_csv(self):
+        pass
+
+
     def isLate(self) -> bool:
         """
         Vérifie si le document est
@@ -337,7 +346,6 @@ class Adherent:
         else:
             print("[!] Ce livre est déjà emprunté")
 
-
     def terminer_emprunt(self, index: int):
         """
         Afin d'éviter une erreur du fait que si l'index serait hors de plage
@@ -352,59 +360,60 @@ class Adherent:
         except:
             return f"[!] Error : Index hors plage"
 
+
 class Adhesions:
     def __init__(self):
-        self._list_adherent : List[Adherent] = []
-        self._adherent_courant : int = -1
+        self._list_adherent: List[Adherent] = []
+        self._adherent_courant: int = -1
 
-    def add (self, adherent : Adherent )->bool :
-        for i in range(len(self._list_adherent)) :
-            if adherent == self._list_adherent[i] :
+    def add(self, adherent: Adherent) -> bool:
+        for i in range(len(self._list_adherent)):
+            if adherent == self._list_adherent[i]:
                 return False
         self._list_adherent.append(adherent)
         return True
 
-
-    def suprime (self, adherent : Adherent):
-        if adherent in  self._list_adherent :
+    def supprime(self, adherent: Adherent):
+        if adherent in self._list_adherent:
             self._list_adherent.remove(adherent)
 
-    def set_adherant_courant(self, index : int):
-        if -1 < index < len(self._list_adherent) :
+    def set_adherant_courant(self, index: int):
+        if -1 < index < len(self._list_adherent):
             self._adherent_courant = index
 
-    def set_adherant_courant_by_name(self, name : str):
+    def set_adherant_courant_by_name(self, name: str):
         index = self._get_index_by_name(name)
-        if index != -1 :
+        if index != -1:
             self.set_adherant_courant(index)
 
-    def _get(self, index : int)->Adherent:
+    def _get(self, index: int) -> Adherent:
         return self._list_adherent[index]
 
-    def _get_courant(self)-> Union[Adherent,None]:
+    def _get_courant(self) -> Union[Adherent, None]:
         pass
 
-    def _get_index_by_name(self, name : str )->int :
-            for i in range(len(self._list_adherent)):
-                if name == self._list_adherent[i].get_name():
-                    return i
-            return -1
+    def _get_index_by_name(self, name: str) -> int:
+        for i in range(len(self._list_adherent)):
+            if name == self._list_adherent[i].get_name():
+                return i
+        return -1
 
-    def get_by_name(self, name : str )-> Adherent:
+    def get_by_name(self, name: str) -> Adherent:
         index = self._get_index_by_name(name)
         if index != -1:
             return self._get(index)
 
-    def get_name_courant(self, name)-> str:
+    def get_name_courant(self, name) -> str:
         index = self._get_index_by_name(name)
         if index != -1:
             self._list_adherent[index].get_name()
 
-    def to_cvs (self)-> str :
-        s="index:<50;nom:^80\n"
+    def to_cvs(self) -> str:
+        s = "index:<50;nom:^80\n"
         for i in range(len(self._list_adherent)):
             s += f"{i};{self._list_adherent[i].get_name()}\n"
         return s
+
 
 def main():
     m = Mediatheque()

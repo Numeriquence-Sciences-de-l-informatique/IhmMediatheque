@@ -47,6 +47,7 @@ class Medias(ttk.Notebook):
         self.pack()
         self.add(Creerlivre(self), text="creer livre")
         self.add(CreerCD(self), text="creer CD")
+        self.add(SearchCD(self), text="Rechercher Document")
 
 
 class Creerlivre(ttk.Frame):
@@ -74,8 +75,6 @@ class Creerlivre(ttk.Frame):
 
 
     def creerLivre(self):
-        'function to create a book in mediatheque'
-
         self.master.master.master.mediatheque.add(Livre(self.titre.get(), self.auteur.get()))
         print(self.master.master.master.mediatheque)
 
@@ -103,17 +102,32 @@ class CreerCD(ttk.Frame):
         self.b1 = ttk.Button(self, text="Créer", command=self.createCD)
         self.b1.grid(row=5, column=1, padx=5, pady=5)
 
-
-
-
     def createCD(self):
         self.master.master.master.mediatheque.add(CD(self.title.get(),  self.interprete.get(), self.compositor.get()))
         print(self.master.master.master.mediatheque)
+
 
 class ListeDocs(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
+
+class SearchCD(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent
+
+        ttk.Label(self, text="Titre du document").grid(row=0, column=0, padx=12, pady=5)
+        self.title = ttk.Entry(self)
+        self.title.grid(row=0, column=1)
+
+        self.search = ttk.Button(self, text="Rechercher", command=self.searchDoc)
+        self.search.grid(row=1, column=1, padx=12, pady=7)
+
+    def searchDoc(self):
+        pass
+
+
 
 
 

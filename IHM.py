@@ -47,7 +47,7 @@ class Medias(ttk.Notebook):
         self.pack()
         self.add(Creerlivre(self), text="creer livre")
         self.add(CreerCD(self), text="creer CD")
-        self.add(SearchDocs(self), text="Rechercher Document")
+        self.add(SearchLivre(self), text="Rechercher Document")
 
 
 class Creerlivre(ttk.Frame):
@@ -112,7 +112,7 @@ class ListeDocs(ttk.Frame):
         super().__init__(parent)
         self.parent = parent
 
-class SearchDocs(ttk.Frame):
+class SearchLivre(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
@@ -121,10 +121,10 @@ class SearchDocs(ttk.Frame):
         self.title = ttk.Entry(self)
         self.title.grid(row=0, column=1)
 
-        self.search = ttk.Button(self, text="Rechercher", command=self.searchDoc)
+        self.search = ttk.Button(self, text="Rechercher", command=self.searchLivre)
         self.search.grid(row=1, column=1, padx=12, pady=7)
 
-    def searchDoc(self, title: str):
+    def searchLivre(self, title: str):
         self.master.master.master.mediatheque.search(title)
         print(self.master.master.master.mediatheque)
 

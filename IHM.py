@@ -51,16 +51,29 @@ class Creerlivre(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
+
+        # first Label
         ttk.Label(self, text="Titre").grid(row=0, column=0,padx=12,pady=5)
+
+        #first Entry: titre
         self.titre = ttk.Entry(self)
         self.titre.grid(row=0, column=1)
+
+        # second Label
         ttk.Label(self, text="Auteur").grid(row=1,column=0,padx=5, pady=5)
+
+        # second Entry: auteur
         self.auteur = ttk.Entry(self)
         self.auteur.grid(row=1,column=1)
+
+        # first Button: Create a book
         self.b1 = ttk.Button(self, text="Créer", command=self.creerLivre)
         self.b1.grid(row=2,column=1,padx=5,pady=5)
 
+
     def creerLivre(self):
+        'function to create a book in mediatheque'
+
         self.master.master.master.mediatheque.add(Livre(self.titre.get(), self.auteur.get()))
         print(self.master.master.master.mediatheque)
 
@@ -94,6 +107,12 @@ class CreerCD(ttk.Frame):
     def createCD(self):
         self.master.master.master.mediatheque.add(CD(self.title.get(), self.compositeur.get(), self.interprete.get()))
         print(self.master.master.master.mediatheque)
+
+class ListeDocs(ttk.Frame):
+    def __init__(self):
+        super().__init__(parent)
+        self.parent = parent
+
 
 
 def main():

@@ -1,3 +1,5 @@
+
+
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
@@ -89,8 +91,8 @@ class CreerCD(ttk.Frame):
 
         # For Compositeur
         ttk.Label(self, text="Compositeur").grid(row=1, column=0, padx=12, pady=5)
-        self.compositeur = ttk.Entry(self)
-        self.compositeur.grid(row=1, column=1)
+        self.compositor = ttk.Entry(self)
+        self.compositor.grid(row=1, column=1)
 
         # For Interprete
         ttk.Label(self, text="Interprete").grid(row=2, column=0, padx=12, pady=5)
@@ -105,11 +107,11 @@ class CreerCD(ttk.Frame):
 
 
     def createCD(self):
-        self.master.master.master.mediatheque.add(CD(self.title.get(), self.compositeur.get(), self.interprete.get()))
+        self.master.master.master.mediatheque.add(CD(self.title.get(),  self.interprete.get(), self.compositor.get()))
         print(self.master.master.master.mediatheque)
 
 class ListeDocs(ttk.Frame):
-    def __init__(self):
+    def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
 

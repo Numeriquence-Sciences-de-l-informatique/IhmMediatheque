@@ -187,7 +187,10 @@ class Mediatheque:
         return s
 
     def to_csv(self) -> str:
-        pass
+        s = ""
+        for i in range(len(self._documents)):
+            s += f'{"document"};{"titre"};{"auteur/compositeur"};{"interprete"};{"disponible"};\n'
+        return s
 
     def initialisation(self):
         self.add(Livre("Essais", "Montaigne"))
@@ -298,6 +301,13 @@ class Emprunt(ABC):
         :return:
         """
         return self._doc.getEmprunt()
+
+    def to_csv(self) -> str:
+        s = ""
+        for i in range(len(self._list_adherent)):
+            s += f"{self._doc.__str__()[:80]};{str(self._dateEmprunt)};{str(timedelta(days= self._nbDayMake) + self._dateEmprunt)};\n"
+        return s
+
 
 
 class Empruntlivre(Emprunt):

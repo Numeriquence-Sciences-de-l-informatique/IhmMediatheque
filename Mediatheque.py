@@ -226,16 +226,16 @@ class Mediatheque:
         for i in range(len(self._documents)):
             if self._documents[i].getTitle() == title: return index
             index += 1
-        return False
+        return -1
 
     # noinspection PyTypeChecker
-    def searchCD(self, c: str) -> bool:
+    def searchCD(self, c: str) -> int:
         """
 
         :param c: compositeur
         :return: Bool
         """
-        count = 0
+        index = 0
         for i in range(len(self._documents)):
             """
             On vérifie que le document est
@@ -247,8 +247,9 @@ class Mediatheque:
                 est bien celui recherché
                 """
                 cd: CD = self._documents[i]  # Permet ici de récupérer les méthodes de la class CD
-                if cd.getCompositor() == c: return count
-                count += 1
+                if cd.getCompositor() == c: return index
+                index += 1
+        return -1
 
     def getDocument(self, index: int) -> Union[Document, str]:
         """

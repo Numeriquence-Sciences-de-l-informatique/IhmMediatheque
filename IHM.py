@@ -47,7 +47,9 @@ class Medias(ttk.Notebook):
         self.pack()
         self.add(Creerlivre(self), text="creer livre")
         self.add(CreerCD(self), text="creer CD")
-        self.add(SearchLivre(self), text="Rechercher Document")
+        self.add(SearchCD(self), text="Rechercher Document")
+        self.add(ListeDocs(self), text="Lister des documents")
+
 
 
 class Creerlivre(ttk.Frame):
@@ -110,9 +112,12 @@ class CreerCD(ttk.Frame):
 class ListeDocs(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.parent = parent
+        "Reflexion en cours ...."
 
-class SearchLivre(ttk.Frame):
+
+
+
+class SearchCD(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent

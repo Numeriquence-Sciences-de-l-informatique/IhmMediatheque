@@ -254,6 +254,9 @@ class Mediatheque:
                 index += 1
         return -1
 
+    def getAllDocument(self):
+        return self._documents
+
     def getDocument(self, index: int) -> Union[Document, str]:
         """
         Permet de récupérer le document via un

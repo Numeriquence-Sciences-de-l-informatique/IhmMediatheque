@@ -69,26 +69,26 @@ class CreerCD(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        f1 = ttk.Frame(self, borderwidth=5)
-        f1.pack()
-        ttk.Label(f1, text="Titre").pack(padx=31, pady=5, side="left")
-        self.title = ttk.Entry(f1)
-        self.title.pack(padx=5, pady=5, side="right")
+        # For Title
+        ttk.Label(self, text="Titre").grid(row=0, column=0, padx=12, pady=5)
+        self.title = ttk.Entry(self)
+        self.title.grid(row=0, column=1)
 
-        f2 = ttk.Frame(self, borderwidth=5)
-        f2.pack()
-        ttk.Label(f2, text="Compositeur").pack(padx=5, pady=5, side="left")
-        self.compositeur = ttk.Entry(f2)
-        self.compositeur.pack(padx=5, pady=5)
+        # For Compositeur
+        ttk.Label(self, text="Compositeur").grid(row=1, column=0, padx=12, pady=5)
+        self.compositeur = ttk.Entry(self)
+        self.compositeur.grid(row=1, column=1)
 
-        f3 = ttk.Frame(self, borderwidth=5)
-        f3.pack()
-        ttk.Label(f3, text="Interprete").pack(padx=13, pady=5, side="left")
-        self.interprete = ttk.Entry(f3)
-        self.interprete.pack(padx=5, pady=5)
+        # For Interprete
+        ttk.Label(self, text="Interprete").grid(row=2, column=0, padx=12, pady=5)
+        self.interprete = ttk.Entry(self)
+        self.interprete.grid(row=2, column=1)
 
+        # For the Button
         self.b1 = ttk.Button(self, text="Créer", command=self.createCD)
-        self.b1.pack()
+        self.b1.grid(row=5, column=1, padx=5, pady=5)
+
+
 
 
     def createCD(self):

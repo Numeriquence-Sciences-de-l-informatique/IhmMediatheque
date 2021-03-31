@@ -1,5 +1,4 @@
 
-
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
@@ -46,6 +45,8 @@ class Medias(ttk.Notebook):
         self.add(Creerlivre(self), text="creer livre")
         self.add(CreerCD(self), text="creer CD")
         self.add(SearchCD(self), text="Rechercher Document")
+        self.add(ListeDocs(self), text="Lister des documents")
+
 
 
 class Creerlivre(ttk.Frame):
@@ -54,22 +55,22 @@ class Creerlivre(ttk.Frame):
         self.parent = parent
 
         # first Label
-        ttk.Label(self, text="Titre").grid(row=0, column=0,padx=12,pady=5)
+        ttk.Label(self, text="Titre").grid(row=0, column=0 ,padx=12 ,pady=5)
 
-        #first Entry: titre
+        # first Entry: titre
         self.titre = ttk.Entry(self)
         self.titre.grid(row=0, column=1)
 
         # second Label
-        ttk.Label(self, text="Auteur").grid(row=1,column=0,padx=5, pady=5)
+        ttk.Label(self, text="Auteur").grid(row=1 ,column=0 ,padx=5, pady=5)
 
         # second Entry: auteur
         self.auteur = ttk.Entry(self)
-        self.auteur.grid(row=1,column=1)
+        self.auteur.grid(row=1 ,column=1)
 
         # first Button: Create a book
         self.b1 = ttk.Button(self, text="Créer", command=self.creerLivre)
-        self.b1.grid(row=2,column=1,padx=5,pady=5)
+        self.b1.grid(row=2 ,column=1 ,padx=5 ,pady=5)
 
 
     def creerLivre(self):
@@ -108,7 +109,16 @@ class CreerCD(ttk.Frame):
 class ListeDocs(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.parent = parent
+        med_csv = self.master.master.master.mediatheque.to_csv()
+        print(med_csv)
+        self.data = Datagrid(self,med_csv)
+        self.data.pack()
+
+        " /!\ méthode non terminée "
+
+
+
+
 
 
 class SearchCD(ttk.Frame):
@@ -120,11 +130,12 @@ class SearchCD(ttk.Frame):
         self.title = ttk.Entry(self)
         self.title.grid(row=0, column=1)
 
-        self.search = ttk.Button(self, text="Rechercher", command=self.searchDoc)
+        self.search = ttk.Button(self, text="Rechercher", command=self.searchLivre)
         self.search.grid(row=1, column=1, padx=12, pady=7)
 
-    def searchDoc(self):
-        pass
+    def searchLivre(self):
+        index: int = self.master.master.master.mediatheque.search(self.title.get())
+        print(index)
 
 
 class Adherents(ttk.Notebook):

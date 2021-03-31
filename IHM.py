@@ -21,7 +21,7 @@ class Fenetre(Tk):
         self.onglets.pack(fill=tk.BOTH, expand=1)
         o1 = Medias(self.onglets)  # Ajout de l'onglet 1
         o1.pack(side=LEFT)
-        o2 = ttk.Frame(self.onglets)  # Ajout de l'onglet 2
+        o2 = Adherents(self.onglets)  # Ajout de l'onglet 2
         o2.pack(side=LEFT)
         self.onglets.add(o1, text='Médiathèque')  # Nom de l'onglet 1
         self.onglets.add(o2, text='Adhérents')  # Nom de l'onglet 2
@@ -36,8 +36,6 @@ class Fenetre(Tk):
         # rad1.grid(column=0, row=0)
         # rad2.grid(column=1, row=0)
         # rad3.grid(column=2, row=0)
-        lbl = Label(o2, text="Hello", font=("Arial Bold", 50))
-        lbl.pack()
 
 
 class Medias(ttk.Notebook):
@@ -112,6 +110,7 @@ class ListeDocs(ttk.Frame):
         super().__init__(parent)
         self.parent = parent
 
+
 class SearchCD(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
@@ -128,7 +127,48 @@ class SearchCD(ttk.Frame):
         pass
 
 
+class Adherents(ttk.Notebook):
+    def __init__(self, fenetre):
+        super().__init__(fenetre)
+        self.pack()
+        self.add(Creerlivre(self), text="creer un Adherent")
+        self.add(CreerCD(self), text="suprimer un Adherent")
+        self.add(SearchCD(self), text="Liste des Adherents")
 
+class CreerAdherents(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent
+        # For Title
+        ttk.Label(self, text="Nom").grid(row=0, column=0, padx=12, pady=5)
+        self.title = ttk.Entry(self)
+        self.title.grid(row=0, column=1)
+
+        # For the Button
+        self.b1 = ttk.Button(self, text="Créer", command=self.createAdherent)
+        self.b1.grid(row=5, column=1, padx=5, pady=5)
+
+    def createAdherent(self):
+        self.master.master.master.mediatheque.add(Adherent(self._name.get()))
+        print(self.master.master.master.mediatheque)
+
+
+class SupprimeAdherents(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent
+        # For Nom
+        ttk.Label(self, text="Nom").grid(row=0, column=0, padx=12, pady=5)
+        self.title = ttk.Entry(self)
+        self.title.grid(row=0, column=1)
+
+        # For the Button
+        self.b1 = ttk.Button(self, text="Supprimer", command=self.suprimeAdherent)
+        self.b1.grid(row=5, column=1, padx=5, pady=5)
+
+    def suprimeAdherent(self):
+        self.master.master.master.mediatheque.supprime(Adherent(self._name.get()))
+        print(self.master.master.master.mediatheque)
 
 
 def main():

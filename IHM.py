@@ -103,6 +103,7 @@ class CreerCD(ttk.Frame):
 
     def createCD(self):
         self.master.master.master.mediatheque.add(CD(self.title.get(), self.interprete.get(), self.compositor.get()))
+        self.master.ld.data.reload_data(self.master.master.master.mediatheque.to_csv())
         print(self.master.master.master.mediatheque)
 
 

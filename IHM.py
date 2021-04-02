@@ -1,4 +1,3 @@
-
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
@@ -12,6 +11,7 @@ class Fenetre(Tk):
         super().__init__()
         self.mediatheque = Mediatheque()
         self.adherents = Adhesions()
+        self.mediatheque.initialisation()
         self.texte: str = "Hi"
         self.nombre: int = 10
         self.title("Médiathèque")
@@ -48,30 +48,28 @@ class Medias(ttk.Notebook):
         self.add(ListeDocs(self), text="Lister des documents")
 
 
-
 class Creerlivre(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
 
         # first Label
-        ttk.Label(self, text="Titre").grid(row=0, column=0 ,padx=12 ,pady=5)
+        ttk.Label(self, text="Titre").grid(row=0, column=0, padx=12, pady=5)
 
         # first Entry: titre
         self.titre = ttk.Entry(self)
         self.titre.grid(row=0, column=1)
 
         # second Label
-        ttk.Label(self, text="Auteur").grid(row=1 ,column=0 ,padx=5, pady=5)
+        ttk.Label(self, text="Auteur").grid(row=1, column=0, padx=5, pady=5)
 
         # second Entry: auteur
         self.auteur = ttk.Entry(self)
-        self.auteur.grid(row=1 ,column=1)
+        self.auteur.grid(row=1, column=1)
 
         # first Button: Create a book
         self.b1 = ttk.Button(self, text="Créer", command=self.creerLivre)
-        self.b1.grid(row=2 ,column=1 ,padx=5 ,pady=5)
-
+        self.b1.grid(row=2, column=1, padx=5, pady=5)
 
     def creerLivre(self):
         self.master.master.master.mediatheque.add(Livre(self.titre.get(), self.auteur.get()))
@@ -102,7 +100,7 @@ class CreerCD(ttk.Frame):
         self.b1.grid(row=5, column=1, padx=5, pady=5)
 
     def createCD(self):
-        self.master.master.master.mediatheque.add(CD(self.title.get(),  self.interprete.get(), self.compositor.get()))
+        self.master.master.master.mediatheque.add(CD(self.title.get(), self.interprete.get(), self.compositor.get()))
         print(self.master.master.master.mediatheque)
 
 
@@ -111,14 +109,10 @@ class ListeDocs(ttk.Frame):
         super().__init__(parent)
         med_csv = self.master.master.master.mediatheque.to_csv()
         print(med_csv)
-        self.data = Datagrid(self,med_csv)
+        self.data = Datagrid(self, med_csv)
         self.data.pack()
 
         " /!\ méthode non terminée "
-
-
-
-
 
 
 class SearchCD(ttk.Frame):
@@ -145,6 +139,7 @@ class Adherents(ttk.Notebook):
         self.add(Creerlivre(self), text="creer un Adherent")
         self.add(CreerCD(self), text="suprimer un Adherent")
         self.add(SearchCD(self), text="Liste des Adherents")
+
 
 class CreerAdherents(ttk.Frame):
     def __init__(self, parent):

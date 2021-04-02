@@ -42,10 +42,11 @@ class Medias(ttk.Notebook):
         super().__init__(fenetre)
         self.fenetre = fenetre
         self.pack()
+        self.ld = ListeDocs(self)
         self.add(Creerlivre(self), text="creer livre")
         self.add(CreerCD(self), text="creer CD")
         self.add(SearchCD(self), text="Rechercher Document")
-        self.add(ListeDocs(self), text="Liste des documents")
+        self.add(self.ld, text="Liste des documents")
 
 
 class Creerlivre(ttk.Frame):
@@ -73,6 +74,7 @@ class Creerlivre(ttk.Frame):
 
     def creerLivre(self):
         self.master.master.master.mediatheque.add(Livre(self.titre.get(), self.auteur.get()))
+        self.master.ld.data.reload_data(self.master.master.master.mediatheque.to_csv())
         print(self.master.master.master.mediatheque)
 
 
@@ -107,12 +109,9 @@ class CreerCD(ttk.Frame):
 class ListeDocs(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-        med_csv = self.master.master.master.mediatheque.to_csv()
-        print(med_csv)
-        self.data = Datagrid(self, med_csv)
+        self.med_csv = self.master.master.master.mediatheque.to_csv()
+        self.data = Datagrid(self, self.med_csv)
         self.data.pack()
-
-        " /!\ méthode non terminée "
 
 
 class SearchCD(ttk.Frame):

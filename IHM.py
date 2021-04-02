@@ -137,7 +137,7 @@ class Adherents(ttk.Notebook):
         self.pack()
         self.add(CreerAdherents(self), text="creer un Adherent")
         self.add(SupprimeAdherents(self), text="suprimer un Adherent")
-        self.add(SearchCD(self), text="Liste des Adherents")
+        self.add(ListeAdherent(self), text="Liste des Adherents")
 
 
 class CreerAdherents(ttk.Frame):
@@ -154,8 +154,8 @@ class CreerAdherents(ttk.Frame):
         self.b1.grid(row=5, column=1, padx=5, pady=5)
 
     def createAdherent(self):
-        self.master.master.master.mediatheque.add(Adherent(self._name.get()))
-        print(self.master.master.master.mediatheque)
+        self.master.master.master.adherents.add(Adherent(self.title.get()))
+        print(self.master.master.master.adherents)
 
 
 class SupprimeAdherents(ttk.Frame):
@@ -171,15 +171,18 @@ class SupprimeAdherents(ttk.Frame):
         self.b1 = ttk.Button(self, text="Supprimer", command=self.suprimeAdherent)
         self.b1.grid(row=5, column=1, padx=5, pady=5)
 
-    def suprimeAdherent(self):
-        self.master.master.master.mediatheque.supprime(Adherent(self._name.get()))
-        print(self.master.master.master.mediatheque)
+    def supprimeAdherent(self):
+        self.master.master.master.adherents.supprime(Adherent(self._name.get()))
+        print(self.master.master.master.adherents)
 
 class ListeAdherent(ttk.Frame):
     def __init__(self,parent):
         super().__init__(parent)
         self.parent = parent
-        med_csv = self.master.master.master.mediatheque.to_csv()
+        Adh_csv = self.master.master.master.adherents.to_csv()
+        print(Adh_csv)
+        self.data = Datagrid(self, Adh_csv)
+        self.data.pack()
 
     #methode non terminer
 

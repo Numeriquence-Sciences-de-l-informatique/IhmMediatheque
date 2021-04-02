@@ -449,6 +449,18 @@ class Adhesions:
         self.add(Adherent("Nathanael"))
         self.add(Adherent("Thomas"))
 
+    def __str__(self):
+        s = f"Adhésion: {self._name}\n"
+        s += '/----------------------------------------------------------------------------------------------------------------------\ \n'
+        s += f"|{'index':^6}|{'Nom':^15}|{'Document':^10}|{'titre': ^26}|{'auteur/compositeur': ^20}|{'Interprete':20}|{'Depuis le':^15}|{'Retour le':^15}| \n"
+        s += '|----------------------------------------------------------------------------------------------------------------------|\n'
+        for index, d in enumerate(self._borrowingInProgress):
+            s += f"|{index:^6}|{str(d)}"
+        s += "\----------------------------------------------------------------------------------------------------------------------/"
+        return s
+
+
+
 def main():
     m = Mediatheque()
     m.add(Livre("Essais", "Montaigne"))

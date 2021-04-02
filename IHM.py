@@ -117,10 +117,6 @@ class ListeDocs(ttk.Frame):
         " /!\ méthode non terminée "
 
 
-
-
-
-
 class SearchCD(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
@@ -142,8 +138,8 @@ class Adherents(ttk.Notebook):
     def __init__(self, fenetre):
         super().__init__(fenetre)
         self.pack()
-        self.add(Creerlivre(self), text="creer un Adherent")
-        self.add(CreerCD(self), text="suprimer un Adherent")
+        self.add(CreerAdherents(self), text="creer un Adherent")
+        self.add(SupprimeAdherents(self), text="suprimer un Adherent")
         self.add(SearchCD(self), text="Liste des Adherents")
 
 class CreerAdherents(ttk.Frame):
@@ -180,6 +176,15 @@ class SupprimeAdherents(ttk.Frame):
     def suprimeAdherent(self):
         self.master.master.master.mediatheque.supprime(Adherent(self._name.get()))
         print(self.master.master.master.mediatheque)
+
+class ListeAdherent(ttk.Frame):
+    def __init__(self,parent):
+        super().__init__(parent)
+        self.parent = parent
+        med_csv = self.master.master.master.mediatheque.to_csv()
+
+    #methode non terminer
+
 
 
 def main():

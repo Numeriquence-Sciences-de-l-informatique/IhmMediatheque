@@ -45,7 +45,7 @@ class Medias(ttk.Notebook):
         self.add(Creerlivre(self), text="creer livre")
         self.add(CreerCD(self), text="creer CD")
         self.add(SearchCD(self), text="Rechercher Document")
-        self.add(ListeDocs(self), text="Lister des documents")
+        self.add(ListeDocs(self), text="Liste des documents")
 
 
 class Creerlivre(ttk.Frame):

@@ -214,7 +214,7 @@ class Mediatheque:
         :param d:
         :return:
         """
-        if self.search(d.getTitle()):
+        if self.search(d.getTitle()) != -1:
             return "Le document existe déjà"
         else:
             self._documents.append(d)

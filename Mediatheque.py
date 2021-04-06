@@ -337,6 +337,8 @@ class Adherent:
         s += "\----------------------------------------------------------------------------------------------------------------------/"
         return s
 
+    def get_name(self):
+        return self._name
 
     def to_csv(self):
         pass
@@ -450,13 +452,13 @@ class Adhesions:
         self.add(Adherent("Thomas"))
 
     def __str__(self):
-        s = f"Adhésion: {self._name}\n"
-        s += '/----------------------------------------------------------------------------------------------------------------------\ \n'
-        s += f"|{'index':^6}|{'Nom':^15}|{'Document':^10}|{'titre': ^26}|{'auteur/compositeur': ^20}|{'Interprete':20}|{'Depuis le':^15}|{'Retour le':^15}| \n"
-        s += '|----------------------------------------------------------------------------------------------------------------------|\n'
-        for index, d in enumerate(self._borrowingInProgress):
-            s += f"|{index:^6}|{str(d)}"
-        s += "\----------------------------------------------------------------------------------------------------------------------/"
+        s = f"Adhésion:\n"
+        s += f'|{"-"*22}|\n'
+        s += f"|{'index':^6}|{'Nom':^15}|\n"
+        s += f'|{"-"*22}|\n'
+        for index, d in enumerate(self._list_adherent):
+            s += f"|{index:^6}|{d.get_name():^15}|\n"
+        s += f'|{"-"*22}|\n'
         return s
 
 

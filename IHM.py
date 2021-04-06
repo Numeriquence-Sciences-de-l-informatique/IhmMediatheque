@@ -169,7 +169,7 @@ class SupprimeAdherents(ttk.Frame):
         self.title.grid(row=0, column=1)
 
         # For the Button
-        self.b1 = ttk.Button(self, text="Supprimer", command=self.suprimeAdherent)
+        self.b1 = ttk.Button(self, text="Supprimer", command=self.supprimeAdherent)
         self.b1.grid(row=5, column=1, padx=5, pady=5)
 
     def supprimeAdherent(self):

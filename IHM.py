@@ -12,6 +12,7 @@ class Fenetre(Tk):
         self.mediatheque = Mediatheque()
         self.adherents = Adhesions()
         self.mediatheque.initialisation()
+        self.adherents.initialisation()
         self.texte: str = "Hi"
         self.nombre: int = 10
         self.title("Médiathèque")
@@ -138,7 +139,8 @@ class Adherents(ttk.Notebook):
         self.pack()
         self.add(CreerAdherents(self), text="creer un Adherent")
         self.add(SupprimeAdherents(self), text="suprimer un Adherent")
-        self.add(ListeAdherent(self), text="Liste des Adherents")
+        self.list_Ad = ListeAdherent(self)
+        self.add(self.list_Ad, text="Liste des Adherents")
 
 
 class CreerAdherents(ttk.Frame):
@@ -147,15 +149,16 @@ class CreerAdherents(ttk.Frame):
         self.parent = parent
         # For Title
         ttk.Label(self, text="Nom").grid(row=0, column=0, padx=12, pady=5)
-        self.title = ttk.Entry(self)
-        self.title.grid(row=0, column=1)
+        self.name = ttk.Entry(self)
+        self.name.grid(row=0, column=1)
 
         # For the Button
         self.b1 = ttk.Button(self, text="Créer", command=self.createAdherent)
         self.b1.grid(row=5, column=1, padx=5, pady=5)
 
     def createAdherent(self):
-        self.master.master.master.adherents.add(Adherent(self.title.get()))
+        self.master.master.master.adherents.add(Adherent(self.name.get()))
+        self.master.list_Ad.data.reload_data(self.master.master.master.adherents.to_csv())
         print(self.master.master.master.adherents)
 
 
@@ -175,19 +178,17 @@ class SupprimeAdherents(ttk.Frame):
     def supprimeAdherent(self):
         ad : Adhesions = self.master.master.master.adherents
         ad.supprime(ad.get_by_name(self.name.get()))
+        self.master.list_Ad.data.reload_data(self.master.master.master.adherents.to_csv())
         print(self.master.master.master.adherents)
 
 class ListeAdherent(ttk.Frame):
     def __init__(self,parent):
         super().__init__(parent)
         self.parent = parent
-        Adh_csv = self.master.master.master.adherents.to_csv()
-        print(Adh_csv)
-        self.data = Datagrid(self, Adh_csv)
+        ad: Adhesions = self.master.master.master.adherents
+        self.ad_csv = ad.to_csv()
+        self.data = Datagrid(self, self.ad_csv)
         self.data.pack()
-
-    #methode non terminer
-
 
 
 def main():

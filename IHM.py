@@ -165,15 +165,16 @@ class SupprimeAdherents(ttk.Frame):
         self.parent = parent
         # For Nom
         ttk.Label(self, text="Nom").grid(row=0, column=0, padx=12, pady=5)
-        self.title = ttk.Entry(self)
-        self.title.grid(row=0, column=1)
+        self.name = ttk.Entry(self)
+        self.name.grid(row=0, column=1)
 
         # For the Button
-        self.b1 = ttk.Button(self, text="Supprimer", command=self.suprimeAdherent)
+        self.b1 = ttk.Button(self, text="Supprimer", command=self.supprimeAdherent)
         self.b1.grid(row=5, column=1, padx=5, pady=5)
 
     def supprimeAdherent(self):
-        self.master.master.master.adherents.supprime(Adherent(self._name.get()))
+        ad : Adhesions = self.master.master.master.adherents
+        ad.supprime(ad.get_by_name(self.name.get()))
         print(self.master.master.master.adherents)
 
 class ListeAdherent(ttk.Frame):

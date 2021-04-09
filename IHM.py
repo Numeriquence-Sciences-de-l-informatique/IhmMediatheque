@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
+from tkinter.messagebox import askokcancel
+
 from Mediatheque import *
 
 from datagrid import Datagrid
@@ -44,8 +46,10 @@ class Medias(ttk.Notebook):
         self.fenetre = fenetre
         self.pack()
         self.ld = ListeDocs(self)
-        self.add(Creerlivre(self), text="creer livre")
-        self.add(CreerCD(self), text="creer CD")
+        self.creerl = Creerlivre(self)
+        self.creercd = CreerCD(self)
+        self.add(self.creerl, text="creer livre")
+        self.add(self.creercd, text="creer CD")
         self.add(SearchCD(self), text="Rechercher Document")
         self.add(self.ld, text="Liste des documents")
 
@@ -115,6 +119,20 @@ class ListeDocs(ttk.Frame):
         self.data = Datagrid(self, self.med_csv)
         self.data.pack()
 
+
+    def OnClick  (self, event):
+        select = self.data.identify('item', event.x, event.y)
+        doc = self.data.item(select, "value")
+        if askokcancel(title="Modifier un document", message=f"Voulez-vous modifier\n{doc[2]} de {doc[3]}"):
+            if doc[1] == "Livre":
+                self.master.select(0)  # sélection de l'onglet créerLivre
+                self.master.creerl.titre.insert(0, doc[2])
+                self.master.creerl.auteur.insert(0, doc[3])
+            else:
+                self.master.select(1)  # sélection de l'onglet créerCD
+                self.master.creercd.title.insert(0, doc[2])
+                self.master.creercd.compositor.insert(0, doc[3])
+                self.master.creercd.interprete.insert(0, doc[4])
 
 class SearchCD(ttk.Frame):
     def __init__(self, parent):
@@ -189,6 +207,7 @@ class ListeAdherent(ttk.Frame):
         self.ad_csv = ad.to_csv()
         self.data = Datagrid(self, self.ad_csv)
         self.data.pack()
+
 
 
 def main():

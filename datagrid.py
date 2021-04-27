@@ -25,7 +25,7 @@ class Datagrid(ttk.Treeview):
                 header[i] = header[i][:header[i].find(":")]
         super().__init__(parent, selectmode="browse", show="headings", columns=header)
         self.pack(side='left', fill='both', expand=1)
-        self.bind('<Button-1>', self.OnClick)
+        self.bind('<ButtonRelease-1>', self.OnClick)
         scrollbar_y = Scrollbar(parent, command=self.yview)
         scrollbar_y.pack(side='right', fill='y')
         for i, h in enumerate(header):

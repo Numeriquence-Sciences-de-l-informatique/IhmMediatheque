@@ -82,6 +82,10 @@ class Creerlivre(ttk.Frame):
         self.b1 = ttk.Button(self, text=self.creer, command=self.creerLivre)
         self.b1.grid(row=2, column=1, padx=5, pady=5)
 
+        # second Button: Cancel modify
+        self.b2 = ttk.Button(self, text="annuler", command=self.annuler)
+
+
     def creerLivre(self):
         # selection de l'onglet Liste des documents
         self.master.select(3)
@@ -95,6 +99,10 @@ class Creerlivre(ttk.Frame):
             self.doc_courant = None
             self.b1['text'] = self.creer
         self.master.ld.data.reload_data(self.master.master.master.mediatheque.to_csv())
+
+    def annuler(self):
+        self.b2.grid_forget()
+        self.b1['text'] = self.creer
 
 
 class CreerCD(ttk.Frame):
@@ -147,6 +155,7 @@ class ListeDocs(ttk.Frame):
                 self.master.creerl.titre.insert(0, doc.getTitle())
                 self.master.creerl.auteur.delete(0, "end")
                 self.master.creerl.auteur.insert(0, doc.getAuthor())
+                self.master.creerl.b2.grid(row=2, column=2, padx=5, pady=5)
             else:
                 self.master.select(1)  # sélection de l'onglet créerCD
                 self.master.creercd.title.insert(0, doc.getTitle())

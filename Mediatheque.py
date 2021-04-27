@@ -156,6 +156,7 @@ class Livre(Document):
         """
         self._author = author
 
+
     def emprunter(self) -> 'Empruntlivre':
         self.setEmprunt()
         return Empruntlivre(self)

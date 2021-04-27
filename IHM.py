@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter.messagebox import askokcancel
 
 from Mediatheque import *
+from Mediatheque import Livre
 
 from datagrid import Datagrid
 
@@ -58,7 +59,11 @@ class Creerlivre(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-
+        self.modifier = "Modifier"
+        self.creer = "Créer"
+        self.doc_courant: Union[Livre, None] = None
+        # alias vers mediatheque
+        self.mediatheque = self.master.master.master.mediatheque
         # first Label
         ttk.Label(self, text="Titre").grid(row=0, column=0, padx=12, pady=5)
 
@@ -74,19 +79,27 @@ class Creerlivre(ttk.Frame):
         self.auteur.grid(row=1, column=1)
 
         # first Button: Create a book
-        self.b1 = ttk.Button(self, text="Créer", command=self.creerLivre)
+        self.b1 = ttk.Button(self, text=self.creer, command=self.creerLivre)
         self.b1.grid(row=2, column=1, padx=5, pady=5)
 
     def creerLivre(self):
-        self.master.master.master.mediatheque.add(Livre(self.titre.get(), self.auteur.get()))
+        # selection de l'onglet Liste des documents
+        self.master.select(3)
+        if self.doc_courant is None:
+            # création
+            self.master.master.master.mediatheque.add(Livre(self.titre.get(), self.auteur.get()))
+        else:
+            # modification
+            self.doc_courant.setTitle(self.titre.get())
+            self.doc_courant.setAuthor(self.auteur.get())
+            self.doc_courant = None
+            self.b1['text'] = self.creer
         self.master.ld.data.reload_data(self.master.master.master.mediatheque.to_csv())
-        print(self.master.master.master.mediatheque)
 
 
 class CreerCD(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.parent = parent
         # For Title
         ttk.Label(self, text="Titre").grid(row=0, column=0, padx=12, pady=5)
         self.title = ttk.Entry(self)
@@ -107,32 +120,39 @@ class CreerCD(ttk.Frame):
         self.b1.grid(row=5, column=1, padx=5, pady=5)
 
     def createCD(self):
-        self.master.master.master.mediatheque.add(CD(self.title.get(), self.interprete.get(), self.compositor.get()))
-        self.master.ld.data.reload_data(self.master.master.master.mediatheque.to_csv())
-        print(self.master.master.master.mediatheque)
+        self.mediatheque.add(CD(self.title.get(), self.interprete.get(), self.compositor.get()))
+        self.master.ld.data.reload_data(self.mediatheque.to_csv())
+        print(self.mediatheque)
 
 
 class ListeDocs(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.med_csv = self.master.master.master.mediatheque.to_csv()
+        self.mediatheque = self.master.master.master.mediatheque
+        self.med_csv = self.mediatheque.to_csv()
         self.data = Datagrid(self, self.med_csv)
         self.data.pack()
 
-
-    def OnClick  (self, event):
+    def OnClick(self, event):
         select = self.data.identify('item', event.x, event.y)
-        doc = self.data.item(select, "value")
-        if askokcancel(title="Modifier un document", message=f"Voulez-vous modifier\n{doc[2]} de {doc[3]}"):
-            if doc[1] == "Livre":
+        # recuperation du document (Livre ou CD) selectionné
+        doc: Union[CD, Livre] = self.mediatheque.getDocument(int(self.data.item(select, "value")[0]))
+        if askokcancel(title="Modifier un document",
+                       message=f"Voulez-vous modifier\n{doc.getTitle()} de {doc.getAuthor()}"):
+            if isinstance(doc, Livre):
                 self.master.select(0)  # sélection de l'onglet créerLivre
-                self.master.creerl.titre.insert(0, doc[2])
-                self.master.creerl.auteur.insert(0, doc[3])
+                self.master.creerl.doc_courant: Livre = doc
+                self.master.creerl.b1['text'] = "Modifier"
+                self.master.creerl.titre.delete(0, "end")
+                self.master.creerl.titre.insert(0, doc.getTitle())
+                self.master.creerl.auteur.delete(0, "end")
+                self.master.creerl.auteur.insert(0, doc.getAuthor())
             else:
                 self.master.select(1)  # sélection de l'onglet créerCD
-                self.master.creercd.title.insert(0, doc[2])
-                self.master.creercd.compositor.insert(0, doc[3])
-                self.master.creercd.interprete.insert(0, doc[4])
+                self.master.creercd.title.insert(0, doc.getTitle())
+                self.master.creercd.compositor.insert(0, doc.getCompositor())
+                self.master.creercd.interprete.insert(0, doc.getInterprete())
+
 
 class SearchCD(ttk.Frame):
     def __init__(self, parent):
@@ -194,20 +214,20 @@ class SupprimeAdherents(ttk.Frame):
         self.b1.grid(row=5, column=1, padx=5, pady=5)
 
     def supprimeAdherent(self):
-        ad : Adhesions = self.master.master.master.adherents
+        ad: Adhesions = self.master.master.master.adherents
         ad.supprime(ad.get_by_name(self.name.get()))
         self.master.list_Ad.data.reload_data(self.master.master.master.adherents.to_csv())
         print(self.master.master.master.adherents)
 
+
 class ListeAdherent(ttk.Frame):
-    def __init__(self,parent):
+    def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
         ad: Adhesions = self.master.master.master.adherents
         self.ad_csv = ad.to_csv()
         self.data = Datagrid(self, self.ad_csv)
         self.data.pack()
-
 
 
 def main():

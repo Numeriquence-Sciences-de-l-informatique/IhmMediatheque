@@ -109,6 +109,12 @@ class CreerCD(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         # For Title
+        self.parent = parent
+        self.modifier = "Modifier"
+        self.creer = "Créer"
+        self.doc_courant: Union[CD, None] = None
+        self.mediatheque = self.master.master.master.mediatheque
+
         ttk.Label(self, text="Titre").grid(row=0, column=0, padx=12, pady=5)
         self.title = ttk.Entry(self)
         self.title.grid(row=0, column=1)
@@ -128,9 +134,15 @@ class CreerCD(ttk.Frame):
         self.b1.grid(row=5, column=1, padx=5, pady=5)
 
     def createCD(self):
-        self.mediatheque.add(CD(self.title.get(), self.interprete.get(), self.compositor.get()))
+        self.master.select(3)
+        if self.doc_courant is None:
+            self.master.master.master.mediatheque.add(CD(self.title.get(), self.interprete.get(), self.compositor.get()))
+        else:
+            self.doc_courant.setTitle(self.title.get())
+            self.doc_courant.setAuthor(self.compositor.get())
+            self.doc_courant = None
+            self.b1['text'] = self.creer
         self.master.ld.data.reload_data(self.mediatheque.to_csv())
-        print(self.mediatheque)
 
 
 class ListeDocs(ttk.Frame):

@@ -59,7 +59,6 @@ class Medias(ttk.Notebook):
 class Creerlivre(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.parent = parent
         self.modifier = "Modifier"
         self.creer = "Créer"
         self.doc_courant: Union[Livre, None] = None
@@ -84,8 +83,7 @@ class Creerlivre(ttk.Frame):
         self.b1.grid(row=2, column=1, padx=5, pady=5)
 
         # second Button: Cancel modify
-        self.b2 = ttk.Button(self, text="annuler", command=self.annuler)
-
+        self.b2 = ttk.Button(self, text="Annuler", command=self.annuler)
 
     def creerLivre(self):
         # selection de l'onglet Liste des documents
@@ -119,7 +117,6 @@ class CreerCD(ttk.Frame):
         ttk.Label(self, text="Titre").grid(row=0, column=0, padx=12, pady=5)
         self.title = ttk.Entry(self)
         self.title.grid(row=0, column=1)
-        self.mediatheque = self.master.master.master.mediatheque
 
         # For Compositeur
         ttk.Label(self, text="Compositeur").grid(row=1, column=0, padx=12, pady=5)
@@ -133,15 +130,24 @@ class CreerCD(ttk.Frame):
 
         # For the Button
         self.b1 = ttk.Button(self, text="Créer", command=self.createCD)
-        self.b1.grid(row=5, column=1, padx=5, pady=5)
+        self.b1.grid(row=3, column=1, padx=5, pady=5)
+
+        # second Button: Cancel modify
+        self.b2 = ttk.Button(self, text="Annuler", command=self.annuler)
+
+    def annuler(self):
+        self.b2.grid_forget()
+        self.b1['text'] = self.creer
 
     def createCD(self):
         self.master.select(3)
         if self.doc_courant is None:
-            self.master.master.master.mediatheque.add(CD(self.title.get(), self.interprete.get(), self.compositor.get()))
+            self.master.master.master.mediatheque.add(
+                CD(self.title.get(), self.interprete.get(), self.compositor.get()))
         else:
             self.doc_courant.setTitle(self.title.get())
-            self.doc_courant.setAuthor(self.compositor.get())
+            self.doc_courant.setCompositor(self.compositor.get())
+            self.doc_courant.setInterprete(self.interprete.get())
             self.doc_courant = None
             self.b1['text'] = self.creer
         self.master.ld.data.reload_data(self.mediatheque.to_csv())
@@ -159,23 +165,31 @@ class ListeDocs(ttk.Frame):
         select = self.data.identify('item', event.x, event.y)
         # recuperation du document (Livre ou CD) selectionné
         doc: Union[CD, Livre] = self.mediatheque.getDocument(int(self.data.item(select, "value")[0]))
-        if askokcancel(title="Modifier un document",
-                       message=f"Voulez-vous modifier\n{doc.getTitle()} de {doc.getAuthor()}"):
-            if isinstance(doc, Livre):
+
+        if isinstance(doc, Livre):
+            if askokcancel(title="Modifier un Livre",
+                           message=f"Voulez-vous modifier\n{doc.getTitle()} de {doc.getAuthor()}"):
                 self.master.select(0)  # sélection de l'onglet créerLivre
                 self.master.creerl.doc_courant: Livre = doc
-                self.master.creerl.b1['text'] = "Modifier"
+                self.master.creerl.b1['text'] = self.master.creerl.modifier
                 self.master.creerl.titre.delete(0, "end")
                 self.master.creerl.titre.insert(0, doc.getTitle())
                 self.master.creerl.auteur.delete(0, "end")
                 self.master.creerl.auteur.insert(0, doc.getAuthor())
                 self.master.creerl.b2.grid(row=2, column=2, padx=5, pady=5)
-            else:
+        else:
+            if askokcancel(title="Modifier un CD",
+                           message=f"Voulez-vous modifier\n{doc.getTitle()} de {doc.getCompositor()}"):
                 self.master.select(1)  # sélection de l'onglet créerCD
-                self.master.creercd.title.insert(0, doc.getTitle())
+                self.master.creercd.doc_courant: CD = doc
+                self.master.creercd.b1['text'] = self.master.creercd.modifier
+                self.master.creercd.title.delete(0, "end")
+                self.master.creercd.title.insert(0,  doc.getTitle())
+                self.master.creercd.compositor.delete(0, "end")
                 self.master.creercd.compositor.insert(0, doc.getCompositor())
+                self.master.creercd.interprete.delete(0, "end")
                 self.master.creercd.interprete.insert(0, doc.getInterprete())
-
+                self.master.creercd.b2.grid(row=3, column=2, padx=5, pady=5)
 
 
 
@@ -193,14 +207,14 @@ class SearchCD(ttk.Frame):
         self.search = ttk.Button(self, text="Rechercher", command=self.searchLivre)
         self.search.grid(row=1, column=1, padx=12, pady=7)
 
-        self.list_doc = ttk.Label(self, text ="", font = font)
-        self.list_doc.grid(row=2, column=0, padx = 0, pady = 25, columnspan = 10)
+        self.list_doc = ttk.Label(self, text="", font=font)
+        self.list_doc.grid(row=2, column=0, padx=0, pady=25, columnspan=10)
 
     def searchLivre(self):
         index: int = self.mediatheque.search_to_list(self.title.get())
         s = ""
-        for i in index :
-            s += str(self.mediatheque.getDocument(i))+"\n"
+        for i in index:
+            s += str(self.mediatheque.getDocument(i)) + "\n"
         self.list_doc["text"] = s
         print(s)
 
@@ -231,7 +245,7 @@ class CreerAdherents(ttk.Frame):
     def createAdherent(self):
         if self.name.get() in Adherent:
             messagebox.showerror(title=None, message="cet utilisateur n'existe pas")
-            if messagebox.askquestion(title=None, message="creer cet utilisateur") == "yes" :
+            if messagebox.askquestion(title=None, message="creer cet utilisateur") == "yes":
                 self.master.master.master.adherents.add(Adherent(self.name.get()))
                 self.master.list_Ad.data.reload_data(self.master.master.master.adherents.to_csv())
                 print(self.master.master.master.adherents)
@@ -256,14 +270,13 @@ class SupprimeAdherents(ttk.Frame):
         self.master.list_Ad.data.reload_data(self.master.master.master.adherents.to_csv())
         print(self.master.master.master.adherents)
 
-        if self.name.get() not in Adherent :
+        if self.name.get() not in Adherent:
             messagebox.showerror(title=None, message="cet utilisateur n'existe pas")
-            if messagebox.askquestion(title=None, message="supprimer cet utilisateur", icon = "warning") == "yes":
-                ad : Adhesions = self.master.master.master.adherents
+            if messagebox.askquestion(title=None, message="supprimer cet utilisateur", icon="warning") == "yes":
+                ad: Adhesions = self.master.master.master.adherents
                 ad.supprime(ad.get_by_name(self.name.get()))
                 self.master.list_Ad.data.reload_data(self.master.master.master.adherents.to_csv())
                 print(self.master.master.master.adherents)
-
 
 
 class ListeAdherent(ttk.Frame):
@@ -284,5 +297,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-

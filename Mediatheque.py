@@ -244,6 +244,7 @@ class Mediatheque:
             index += 1
         return search
 
+
     # noinspection PyTypeChecker
     def searchCD(self, c: str) -> int:
         """

@@ -118,6 +118,7 @@ class CreerCD(ttk.Frame):
         ttk.Label(self, text="Titre").grid(row=0, column=0, padx=12, pady=5)
         self.title = ttk.Entry(self)
         self.title.grid(row=0, column=1)
+        self.mediatheque = self.master.master.master.mediatheque
 
         # For Compositeur
         ttk.Label(self, text="Compositeur").grid(row=1, column=0, padx=12, pady=5)

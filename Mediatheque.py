@@ -226,7 +226,7 @@ class Mediatheque:
         """
         index = 0
         for i in range(len(self._documents)):
-            if self._documents[i].getTitle() == title: return index
+            if title.lower() in self._documents[i].getTitle().lower(): return index
             index += 1
         return -1
 

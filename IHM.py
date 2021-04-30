@@ -1,5 +1,6 @@
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
+from tkinter.font import Font
 import tkinter as tk
 from tkinter.messagebox import askokcancel
 
@@ -176,10 +177,14 @@ class ListeDocs(ttk.Frame):
                 self.master.creercd.interprete.insert(0, doc.getInterprete())
 
 
+
+
 class SearchCD(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
+        self.mediatheque = self.master.master.master.mediatheque
+        font = Font(family="courier")
 
         ttk.Label(self, text="Titre du document").grid(row=0, column=0, padx=12, pady=5)
         self.title = ttk.Entry(self)
@@ -188,9 +193,16 @@ class SearchCD(ttk.Frame):
         self.search = ttk.Button(self, text="Rechercher", command=self.searchLivre)
         self.search.grid(row=1, column=1, padx=12, pady=7)
 
+        self.list_doc = ttk.Label(self, text ="", font = font)
+        self.list_doc.grid(row=2, column=0, padx = 0, pady = 25, columnspan = 10)
+
     def searchLivre(self):
-        index: int = self.master.master.master.mediatheque.search(self.title.get())
-        print(index)
+        index: int = self.mediatheque.search_to_list(self.title.get())
+        s = ""
+        for i in index :
+            s += str(self.mediatheque.getDocument(i))+"\n"
+        self.list_doc["text"] = s
+        print(s)
 
 
 class Adherents(ttk.Notebook):
@@ -217,9 +229,12 @@ class CreerAdherents(ttk.Frame):
         self.b1.grid(row=5, column=1, padx=5, pady=5)
 
     def createAdherent(self):
-        self.master.master.master.adherents.add(Adherent(self.name.get()))
-        self.master.list_Ad.data.reload_data(self.master.master.master.adherents.to_csv())
-        print(self.master.master.master.adherents)
+        if self.name.get() in Adherent:
+            messagebox.showerror(title=None, message="cet utilisateur n'existe pas")
+            if messagebox.askquestion(title=None, message="creer cet utilisateur") == "yes" :
+                self.master.master.master.adherents.add(Adherent(self.name.get()))
+                self.master.list_Ad.data.reload_data(self.master.master.master.adherents.to_csv())
+                print(self.master.master.master.adherents)
 
 
 class SupprimeAdherents(ttk.Frame):
@@ -241,6 +256,15 @@ class SupprimeAdherents(ttk.Frame):
         self.master.list_Ad.data.reload_data(self.master.master.master.adherents.to_csv())
         print(self.master.master.master.adherents)
 
+        if self.name.get() not in Adherent :
+            messagebox.showerror(title=None, message="cet utilisateur n'existe pas")
+            if messagebox.askquestion(title=None, message="supprimer cet utilisateur", icon = "warning") == "yes":
+                ad : Adhesions = self.master.master.master.adherents
+                ad.supprime(ad.get_by_name(self.name.get()))
+                self.master.list_Ad.data.reload_data(self.master.master.master.adherents.to_csv())
+                print(self.master.master.master.adherents)
+
+
 
 class ListeAdherent(ttk.Frame):
     def __init__(self, parent):
@@ -260,3 +284,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+

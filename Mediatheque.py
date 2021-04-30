@@ -230,6 +230,20 @@ class Mediatheque:
             index += 1
         return -1
 
+    def search_to_list(self, title:str) -> List[int]:
+        """
+                Allows you to search for a document
+                :param title:
+                :return:
+                """
+        index = 0
+        search = []
+        for i in range(len(self._documents)):
+            if title.lower() in self._documents[i].getTitle().lower():
+                search.append(index)
+            index += 1
+        return search
+
     # noinspection PyTypeChecker
     def searchCD(self, c: str) -> int:
         """
